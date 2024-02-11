@@ -1,0 +1,107 @@
+urrent Mongosh Log ID:	632d687ca6346d4719e4b292
+Connecting to:		mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.5.4
+Using MongoDB:		3.6.8
+Using Mongosh:		1.5.4
+
+For mongosh info see: https://docs.mongodb.com/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2022-09-23T13:13:34.923+0530: 
+   2022-09-23T13:13:34.923+0530: ** WARNING: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine
+   2022-09-23T13:13:34.923+0530: **          See http://dochub.mongodb.org/core/prodnotes-filesystem
+   2022-09-23T13:13:39.331+0530: 
+   2022-09-23T13:13:39.331+0530: ** WARNING: Access control is not enabled for the database.
+   2022-09-23T13:13:39.331+0530: **          Read and write access to data and configuration is unrestricted.
+   2022-09-23T13:13:39.331+0530:
+------
+
+test> use aditya
+switched to db aditya
+aditya> db.emp.insert({name:'aditya',age:
+... 
+... 18,branch:'aids'})
+DeprecationWarning: Collection.insert() is deprecated. Use insertOne, insertMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("632d692580bfc9d70848f936") }
+}
+aditya> db.emp.find()
+[
+  {
+    _id: ObjectId("632d692580bfc9d70848f936"),
+    name: 'aditya',
+    age: 18,
+    branch: 'aids'
+  }
+]
+aditya> db.emp.find().pretty()
+[
+  {
+    _id: ObjectId("632d692580bfc9d70848f936"),
+    name: 'aditya',
+    age: 18,
+    branch: 'aids'
+  }
+]
+aditya> db.emp.insert({ name: 'satyam', age: 18, branch: 'comp' });
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("632d6a2880bfc9d70848f937") }
+}
+aditya> db.emp.find().pretty()
+[
+  {
+    _id: ObjectId("632d692580bfc9d70848f936"),
+    name: 'aditya',
+    age: 18,
+    branch: 'aids'
+  },
+  {
+    _id: ObjectId("632d6a2880bfc9d70848f937"),
+    name: 'satyam',
+    age: 18,
+    branch: 'comp'
+  }
+]
+aditya> db.emp.updateOne({name:'aditya'},{$set:{age:22,name:'gaurav'}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+aditya> db.emp.find().pretty()
+[
+  {
+    _id: ObjectId("632d692580bfc9d70848f936"),
+    name: 'gaurav',
+    age: 22,
+    branch: 'aids'
+  },
+  {
+    _id: ObjectId("632d6a2880bfc9d70848f937"),
+    name: 'satyam',
+    age: 18,
+    branch: 'comp'
+  }
+]
+aditya> db.emp.deleteone({name:'satyam'})
+TypeError: db.emp.deleteone is not a function
+aditya> db.emp.deleteOne({name:'satyam'})
+{ acknowledged: true, deletedCount: 1 }
+aditya> db.emp.find().pretty()
+[
+  {
+    _id: ObjectId("632d692580bfc9d70848f936"),
+    name: 'gaurav',
+    age: 22,
+    branch: 'aids'
+  }
+]
+aditya> show collections
+emp
+aditya> 
+
+
