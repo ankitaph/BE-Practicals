@@ -5,8 +5,6 @@ import java.util.*;
 import java.util.Vector.*;
 import java.lang.*;
 import java.rmi.registry.*;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class Client
 { 
@@ -16,8 +14,7 @@ public class Client
         Client c = new Client();
         BufferedReader b = new BufferedReader(new InputStreamReader(System.in));
         int ch;
-        String name, datee, type_of_room, breakfast;
-        LocalDate date;
+        String name, date, type_of_room, breakfast;
         try 
         { 
             Registry r1 = LocateRegistry.getRegistry ( "localhost", 1030);
@@ -33,13 +30,11 @@ public class Client
                         System.out.println(" \nEnter the name of the guest:");
                         name = b.readLine();
                         System.out.println(" \nEnter Check-In Date(YYYY-MM-DD):");
-                        datee = b.readLine();
-                        date = LocalDate.parse(datee, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                        date = b.readLine();
                         System.out.println(" \nEnter which type of room you prefer(Standard / Deluxe):");
                         type_of_room = b.readLine();
                         System.out.println(" \nDo you want to include Breakfast(Yes / No):");
                         breakfast = b.readLine();
-            
                         send_details = DI.input(name, date, "Book");
                         System.out.println(" \n"+send_details+"\n");
                         break;
@@ -49,9 +44,7 @@ public class Client
                         System.out.println(" \nEnter the name of the guest:");
                         name = b.readLine();
                         System.out.println(" \nEnter Check-In Date(YYYY-MM-DD):");
-                        datee = b.readLine();
-                        date = LocalDate.parse(datee, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
+                        date = b.readLine();
                         send_details = DI.input(name, date, "Cancel");
                         System.out.println(" \n"+send_details+"\n");
                         break;
