@@ -7,13 +7,13 @@ import java.util.Vector.*;
 import java.lang.*;
 import java.rmi.registry.*;
 
-public class Ass2_Client{
+public class Client
+{
 	static String name1,name2,name3;
 	public static void main(String args[])
 	{
-		Ass2_Client c=new Ass2_Client();
+		Client c=new Client();
 		BufferedReader b = new BufferedReader(new InputStreamReader(System.in));
-
 		 int ch;
 
 		 try {
@@ -22,8 +22,8 @@ public class Ass2_Client{
 			 do{
 				System.out.println("1.Send input strings\n2.Display concatenated string \nEnter your choice");
 		 		ch= Integer.parseInt(b.readLine());
-		 		switch(ch){
 
+		 		switch(ch){
 		 		case 1:
 		 			System.out.println(" \n Enter first string:");
 		 			name1=b.readLine();
@@ -33,7 +33,6 @@ public class Ass2_Client{
 		 			break;
 		 		case 2:
 		 			System.out.println("\n Concatenated String is : ");
-		 			int i=0;
 		 			System.out.println(" " +name3+"");
 	 	 			break;
 				}
