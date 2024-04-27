@@ -2,18 +2,15 @@ import java.util.*;
 import java.sql.*;
 import java.rmi.*;
 import java.rmi.server.*;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Vector;
 interface DBInterface extends Remote
 {
-    public String input(String name, LocalDate date, String operation) throws RemoteException;
+    public String input(String name, String date, String operation) throws RemoteException;
 }
 
 public class Server extends UnicastRemoteObject implements DBInterface
 {
-    Map<LocalDate, String[]> dateMap = new HashMap<>();
-    ResultSet r;
+    Map<String, String[]> dateMap = new HashMap<>();
     public Server() throws RemoteException
     { 
         try
@@ -39,7 +36,7 @@ public class Server extends UnicastRemoteObject implements DBInterface
         }
     }
 
-    public String input(String name, LocalDate date, String operation)
+    public String input(String name, String date, String operation)
     {
         try
         {
@@ -51,24 +48,26 @@ public class Server extends UnicastRemoteObject implements DBInterface
                     int nextEmptyIndex = -1;
                     for (int i = 0; i < str.length; i++) 
                     {
-                        if (str[i] == null) 
+                        if (str[i].equals(null)) 
                         {
                             nextEmptyIndex = i;
                             break;
                         }
                     }
-                    if(nextEmptyIndex != -1) 
+                    if(nextEmptyIndex == -1) 
                     {
-                        (dateMap.get(date))[nextEmptyIndex] = name;
-                        return "\nBooking for "+name+" for Date "+date+" has been confirmed.";
+                        return "Hotel is full for Date "+date;
                     }
                     else
                     {
-                        return "Hotel is full for Date "+date;
+                        str[nextEmptyIndex] = name;
+                        // dateMap.get(date) = str;
+                        return "\nBooking for "+name+" for Date "+date+" has been confirmed.";
                     }
                 }
                 else
                 {
+                    System.out.println("In book section else");
                     String[] strings = {name, "", "", "", "", "", "", "", "", ""};
                     dateMap.put(date, strings);
                     return "\nBooking for "+name+" for Date "+date+" has been confirmed.";
@@ -78,31 +77,32 @@ public class Server extends UnicastRemoteObject implements DBInterface
             {
                 if (dateMap.containsKey(date)) 
                 {
-                    String[] stringsArray = dateMap.get(date);
+                    String[] str = dateMap.get(date);
         
                     int index = -1;
-                    for (int i = 0; i < stringsArray.length; i++) 
+                    for (int i = 0; i < str.length; i++) 
                     {
-                        if (stringsArray[i] != null && stringsArray[i].equals(name)) 
+                        if (str[i].equals(name)) 
                         {
                             index = i;
                             break;
                         }
                     }
         
-                    if (index != -1) 
+                    if (index == -1) 
                     {
-                        stringsArray[index] = "";
-                        return "\nCancellation for "+name+" for Date "+date+" on "+date+" is successful.";
+                        return "No bookings available with this name.";
                         
                     } else 
                     {
-                        return "No bookings available on this date";
+                        str[index] = "";
+                        // dateMap.get(date) = str;
+                        return "\nCancellation for "+name+" for Date "+date+" on "+date+" is successful.";
                     }
                 } 
                 else 
                 {
-                    return "No bookings available on this date";
+                    return "No bookings available on this date.";
                 }
             }
         }
