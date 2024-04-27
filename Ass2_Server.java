@@ -1,19 +1,17 @@
 import java.sql.*;
 import java.rmi.*;
 import java.rmi.server.*;
-
 import java.util.Vector;
+
 interface DBInterface extends Remote
 {
     public String input(String name1,String name2) throws RemoteException;
 }
 
-public class Ass2_Server extends UnicastRemoteObject implements DBInterface
+public class Server extends UnicastRemoteObject implements DBInterface
 {
-    int flag=0,n,i,j;
     String name3;
-    ResultSet r;
-    public Ass2_Server() throws RemoteException
+    public Server() throws RemoteException
     { 
         try
         {
@@ -29,7 +27,7 @@ public class Ass2_Server extends UnicastRemoteObject implements DBInterface
     { 
         try
         { 
-            Ass2_Server rs=new Ass2_Server();
+            Server rs=new Server();
             java.rmi.registry.LocateRegistry.createRegistry(1030).rebind("DBServ", rs);
         }
         catch (Exception e)
